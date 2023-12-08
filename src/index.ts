@@ -1,3 +1,5 @@
+import { randomBytes } from 'crypto';
+
 import { Logger } from '@resourvereign/plugin-types/logger.js';
 import { Err, Ok, PluginSchema } from '@resourvereign/plugin-types/plugin/index.js';
 import { IntegrationPlugin } from '@resourvereign/plugin-types/plugin/integration.js';
@@ -28,8 +30,8 @@ const initialize = async ({ bookSuccess, cancelSuccess }: MockInitData, logger: 
     },
     async book(date: Date) {
       logger.debug(`Starting to book a resource on ${date}`);
-      const randomId = Math.random().toString(36).substring(7);
-      const randomDescription = Math.random().toString(36).substring(3);
+      const randomId = randomBytes(8).toString('hex');
+      const randomDescription = randomBytes(2).toString('hex');
 
       const result = { id: randomId, description: randomDescription };
 
