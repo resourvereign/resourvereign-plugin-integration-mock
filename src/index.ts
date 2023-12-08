@@ -1,20 +1,26 @@
 import { Logger } from '@resourvereign/plugin-types/logger.js';
-import { PluginSchema } from '@resourvereign/plugin-types/plugin/index.js';
+import { Err, Ok, PluginSchema } from '@resourvereign/plugin-types/plugin/index.js';
 import { IntegrationPlugin } from '@resourvereign/plugin-types/plugin/integration.js';
 
 const schema: PluginSchema = {
   properties: {
-    success: {
+    bookSuccess: {
+      type: 'boolean',
+    },
+    cancelSuccess: {
       type: 'boolean',
     },
   },
 };
 
 type MockInitData = {
-  success: boolean;
+  bookSuccess: boolean;
+  cancelSuccess: boolean;
 };
 
-const initialize = async ({ success }: MockInitData, logger: Logger) => {
+type MockBookId = string;
+
+const initialize = async ({ bookSuccess, cancelSuccess }: MockInitData, logger: Logger) => {
   return {
     async validate() {
       logger.debug(`Starting validation`);
@@ -22,7 +28,27 @@ const initialize = async ({ success }: MockInitData, logger: Logger) => {
     },
     async book(date: Date) {
       logger.debug(`Starting to book a resource on ${date}`);
-      return success;
+      const randomId = Math.random().toString(36).substring(7);
+      const randomDescription = Math.random().toString(36).substring(3);
+
+      const result = { id: randomId, description: randomDescription };
+
+      logger.debug(
+        bookSuccess
+          ? `Booking succeeded as per configuration with result ${JSON.stringify(result)}`
+          : `Booking failed as per configuration`,
+      );
+      return bookSuccess ? Ok(result) : Err(new Error('Booking failed'));
+    },
+
+    async cancel(id: MockBookId) {
+      logger.debug(`Starting to cancel a resource with id ${JSON.stringify(id)}`);
+      logger.debug(
+        cancelSuccess
+          ? `Cancellation succeeded as per configuration`
+          : `Cancellation failed as per configuration`,
+      );
+      return cancelSuccess ? Ok(true) : Err(new Error('Cancellation failed'));
     },
   };
 };
@@ -30,4 +56,4 @@ const initialize = async ({ success }: MockInitData, logger: Logger) => {
 export default {
   schema,
   initialize,
-} satisfies IntegrationPlugin<MockInitData>;
+} satisfies IntegrationPlugin<MockBookId, MockInitData>;
