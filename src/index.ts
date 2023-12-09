@@ -12,13 +12,15 @@ const schema: PluginSchema = {
     bookSuccess: {
       type: 'boolean',
       metadata: {
-        label: 'Success on booking',
+        name: 'Success on booking attempts',
+        description: 'Whether booking attempts should succeed or fail',
       },
     },
     cancelSuccess: {
       type: 'boolean',
       metadata: {
-        label: 'Success on cancellation',
+        name: 'Success on cancellation attempts',
+        description: 'Whether cancellation attempts should succeed or fail',
       },
     },
   },
