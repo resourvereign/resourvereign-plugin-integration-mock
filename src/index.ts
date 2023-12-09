@@ -2,15 +2,24 @@ import { randomBytes } from 'crypto';
 
 import { Logger } from '@resourvereign/plugin-types/logger.js';
 import { Err, Ok, PluginSchema } from '@resourvereign/plugin-types/plugin/index.js';
-import { IntegrationPlugin } from '@resourvereign/plugin-types/plugin/integration.js';
+import {
+  Booking as IntegrationBooking,
+  IntegrationPlugin,
+} from '@resourvereign/plugin-types/plugin/integration.js';
 
 const schema: PluginSchema = {
   properties: {
     bookSuccess: {
       type: 'boolean',
+      metadata: {
+        label: 'Success on booking',
+      },
     },
     cancelSuccess: {
       type: 'boolean',
+      metadata: {
+        label: 'Success on cancellation',
+      },
     },
   },
 };
@@ -21,6 +30,8 @@ type MockInitData = {
 };
 
 type MockBookId = string;
+
+type Booking = IntegrationBooking<MockBookId>;
 
 const initialize = async ({ bookSuccess, cancelSuccess }: MockInitData, logger: Logger) => {
   return {
@@ -43,8 +54,8 @@ const initialize = async ({ bookSuccess, cancelSuccess }: MockInitData, logger: 
       return bookSuccess ? Ok(result) : Err(new Error('Booking failed'));
     },
 
-    async cancel(id: MockBookId) {
-      logger.debug(`Starting to cancel a resource with id ${JSON.stringify(id)}`);
+    async cancel(booking: Booking) {
+      logger.debug(`Starting to cancel a resource with id ${JSON.stringify(booking)}`);
       logger.debug(
         cancelSuccess
           ? `Cancellation succeeded as per configuration`

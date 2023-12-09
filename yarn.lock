@@ -614,10 +614,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@resourvereign/plugin-types@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@resourvereign/plugin-types/-/plugin-types-3.1.0.tgz#85cf50e7362a2cf71cfc138afe867f1fd210254a"
-  integrity sha512-EtBfqfC22Wy90Ex5DSNdd/L97pK44YMZusMZN1VulOURCfP9Fv+ZEJ+LCXfBb1yQFu7f9IzYbG6RmAZy0/k8Wg==
+"@resourvereign/plugin-types@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@resourvereign/plugin-types/-/plugin-types-3.3.0.tgz#b404558a50c58dab7995c0118124a5ac0fd18bae"
+  integrity sha512-6VAW8QQMX8SuyLc+9sCrGQptfd1iiq1ez5zvcCpifrE4uYXQ5HNJ2WuFz24c7HHHab0/cH7eyb1Fj2GX5hg+Eg==
   dependencies:
     "@slangy/common" "^2.0.1"
     jtd "^0.1.1"
