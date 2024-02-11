@@ -70,5 +70,6 @@ const initialize = async ({ bookSuccess, cancelSuccess }: MockInitData, logger: 
 
 export default {
   schema,
-  initialize,
+  register: () => initialize,
+  unregister: () => {},
 } satisfies IntegrationPlugin<MockBookId, MockInitData>;
